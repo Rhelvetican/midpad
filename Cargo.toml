@@ -3,6 +3,9 @@ name = "midpad"
 description = "Command line utility to pad texts."
 license = "MIT"
 authors = ["Rhelv"]
+homepage = "https://github.com/Rhelvetican/midpad"
+repository = "https://github.com/Rhelvetican/midpad"
+readme = "README.md"
 version = "1.0.0"
 edition = "2021"
 
