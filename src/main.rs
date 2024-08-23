@@ -5,8 +5,8 @@ use std::{
 
 use anyhow::Result;
 use clap::Parser;
-use cli::Cli;
-use midpad::midpad;
+use cli::{Cli, PadMode};
+use midpad::{leftpad, midpad, rightpad};
 
 mod cli;
 
@@ -15,7 +15,16 @@ fn main() -> Result<()> {
 
     if let Some(raw_content) = cli.raw.as_deref() {
         let content = raw_content.lines().map(|s| s.to_string()).collect();
-        let new_content = midpad(content);
+
+        let new_content = if let Some(mode) = cli.mode {
+            match mode {
+                PadMode::Middle => midpad(content),
+                PadMode::Left => leftpad(content),
+                PadMode::Right => rightpad(content),
+            }
+        } else {
+            midpad(content)
+        };
 
         if let Some(path) = cli.output.as_deref() {
             let mut f = File::create(path)?;
@@ -32,7 +41,15 @@ fn main() -> Result<()> {
         f.read_to_string(&mut content)?;
 
         let content = content.lines().map(|s| s.to_string()).collect();
-        let new_content = midpad(content);
+        let new_content = if let Some(mode) = cli.mode {
+            match mode {
+                PadMode::Middle => midpad(content),
+                PadMode::Left => leftpad(content),
+                PadMode::Right => rightpad(content),
+            }
+        } else {
+            midpad(content)
+        };
 
         if let Some(path) = cli.output.as_deref() {
             let mut f = File::create(path)?;
