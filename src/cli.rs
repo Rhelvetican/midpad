@@ -1,12 +1,28 @@
 use std::{path::PathBuf, str::FromStr};
 
 use clap::{
-    builder::{OsStr, PossibleValue},
+    builder::{
+        styling::{AnsiColor, Effects},
+        OsStr, PossibleValue, Styles,
+    },
     Parser, ValueEnum,
 };
 
+const STYLES: Styles = Styles::styled()
+    .header(AnsiColor::BrightGreen.on_default().effects(Effects::BOLD))
+    .usage(AnsiColor::Green.on_default().effects(Effects::BOLD))
+    .literal(
+        AnsiColor::Magenta
+            .on_default()
+            .effects(Effects::UNDERLINE)
+            .bold(),
+    )
+    .placeholder(AnsiColor::Magenta.on_default());
+
 #[derive(Parser)]
 #[command(name = "midpad", version, about = "Command line utility to pad texts.", long_about = None)]
+#[command(author)]
+#[command(styles = STYLES)]
 pub struct Cli {
     #[arg(short, long)]
     pub raw: Option<String>,

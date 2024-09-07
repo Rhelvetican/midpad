@@ -9,6 +9,7 @@ use cli::{Cli, PadMode};
 use midpad::{leftpad, midpad, rightpad};
 
 mod cli;
+mod test;
 
 fn main() -> Result<()> {
     let cli = Cli::parse();
